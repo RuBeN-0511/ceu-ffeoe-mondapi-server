@@ -106,7 +106,7 @@ public class AdminController {
 		return empresas.stream().map(e -> new ModelMapper().map(e, EmpresaResponse.class)).toList();
 	}
 	
-    @Operation(summary = "Editar empresa", description = "Permite modificar los datos de una empresa. Todos son obligatorios salvo email y teléfono")
+    @Operation(summary = "Editar empresa", description = "Permite modificar los datos de una empresa")
     @PutMapping("/empresas/{id}")
     public EmpresaResponse editarEmpresa(@PathVariable String id, @Valid @RequestBody EmpresaRequest empresaDto) {
         Empresa empresa = new ModelMapper().map(empresaDto, Empresa.class);

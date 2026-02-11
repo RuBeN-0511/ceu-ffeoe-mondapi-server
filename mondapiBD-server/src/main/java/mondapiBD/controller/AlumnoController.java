@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import mondapiBD.dto.request.RegistrarPracticaRequest;
-import mondapiBD.dto.response.AlumnoResponse;
+import mondapiBD.dto.response.PerfilAlumnoResponse;
 import mondapiBD.dto.response.RegistroPracticaResponse;
 import mondapiBD.exception.ConflictException;
 import mondapiBD.exception.NotFoundException;
@@ -40,11 +40,11 @@ public class AlumnoController {
 
 	@Operation(summary = "Ver perfil del alumno", description = "Muestra datos y resumen de horas. Oculta contacto del tutor laboral")
 	@GetMapping("/{id}/perfil")
-	public AlumnoResponse verPerfil(@PathVariable String id) throws NotFoundException {
+	public PerfilAlumnoResponse verPerfil(@PathVariable String id) throws NotFoundException {
 		Map<String, Object> perfilCompleto = alumnoService.obtenerPerfilCompleto(id);
 
 		Alumno alumno = (Alumno) perfilCompleto.get("alumno");
-		AlumnoResponse response = new ModelMapper().map(alumno, AlumnoResponse.class);
+		PerfilAlumnoResponse response = new ModelMapper().map(alumno, PerfilAlumnoResponse.class);
 
 		Map<String, Object> resumen = alumnoService.obtenerResumenHoras(id);
 		response.setHorasTotales((Double) resumen.get("horasTotales"));
@@ -57,8 +57,7 @@ public class AlumnoController {
 
 	@Operation(summary = "Registrar tareas diarias", description = "Crea un registro de horas. Máximo 8h y saltos de 0.5h")
 	@PostMapping("/{id}/registro")
-	public RegistroPracticaResponse crearRegistro(@Valid @RequestBody RegistrarPracticaRequest dto,
-			@PathVariable String alumnoId) throws ConflictException, NotValidException, NotFoundException {
+	public RegistroPracticaResponse crearRegistro(@PathVariable String id, @Valid @RequestBody RegistrarPracticaRequest dto) throws ConflictException, NotValidException, NotFoundException {
 		
 		Fecha fecha = practicasService.buscarByFecha(dto.getFecha());
 		
@@ -66,7 +65,7 @@ public class AlumnoController {
 		registro.setIdFecha(fecha.getId());
 		registro.setHoras(dto.getHoras());
 		registro.setDescripcion(dto.getDescripcion());
-		registro.setIdAlumno(alumnoId);
+		registro.setIdAlumno(id);
 		
 		RegistroPractica resgitroCreado = practicasService.crearRegistro(registro);
 		

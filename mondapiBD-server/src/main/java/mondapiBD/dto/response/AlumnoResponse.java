@@ -1,15 +1,17 @@
 package mondapiBD.dto.response;
 
 import lombok.Data;
+import mondapiBD.model.enums.Ciclo;
+import mondapiBD.model.enums.Evaluacion;
 
 @Data
 public class AlumnoResponse {
+
+    private String id;
     private String nombreCompleto;
-    private String ciclo;
-    private String nombreEmpresa;
-    private String nombreTutorDocente;
-    private Double horasTotales;
-    private Double horasRealizadas;
-    private Double porcentajeCompletado;
-    private Double horasPendientes;
+    private Ciclo ciclo;
+    private Evaluacion evaluacion;
+    private Integer añoCurso;
+    private String idTutorDocente;
+    private String idEmpresa;
 }
