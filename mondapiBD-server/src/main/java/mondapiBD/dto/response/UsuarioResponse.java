@@ -8,6 +8,6 @@ public class UsuarioResponse {
     private String id;
     private String username;
     private Perfil perfil;
-    private String nombreAsociado;
+    private String idAsociado;
     private Boolean activo;
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,4 +70,10 @@ public class AlumnoController {
 		List<RegistroPractica> registros = practicasService.listarRegistrosPorAlumno(id);
 		return registros.stream().map(r -> new ModelMapper().map(r, RegistroPracticaResponse.class)).toList();
 	}
+	
+    @Operation(summary = "Borrar un registro de prácticas", description = "Permite al alumno eliminar un registro desde el detalle. Requisito [8]")
+    @DeleteMapping("/registro/{id}")
+    public void borrarRegistro(@PathVariable String id) {
+        practicasService.eliminarRegistro(id);
+    }
 }

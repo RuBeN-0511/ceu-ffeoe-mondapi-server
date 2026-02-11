@@ -10,7 +10,7 @@ import mondapiBD.model.Usuario;
 public interface AdminService {
 	
     // Gestión de Usuarios
-    public Usuario crearUsuario(Usuario usuario) throws ConflictException; 
+	public Usuario crearUsuario(Usuario usuario, String nombreCompletoAsociado) throws ConflictException;
     public List<Usuario> listarUsuarios();
     public void alternarEstadoUsuario(String usuarioId, boolean activo);
 
