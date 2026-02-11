@@ -23,6 +23,7 @@ import mondapiBD.exception.ConflictException;
 import mondapiBD.exception.NotFoundException;
 import mondapiBD.exception.NotValidException;
 import mondapiBD.model.Alumno;
+import mondapiBD.model.Fecha;
 import mondapiBD.model.RegistroPractica;
 import mondapiBD.service.AlumnoService;
 import mondapiBD.service.PracticasService;
@@ -57,10 +58,18 @@ public class AlumnoController {
 	@Operation(summary = "Registrar tareas diarias", description = "Crea un registro de horas. Máximo 8h y saltos de 0.5h")
 	@PostMapping("/{id}/registro")
 	public RegistroPracticaResponse crearRegistro(@Valid @RequestBody RegistrarPracticaRequest dto,
-			@PathVariable String alumnoId) throws ConflictException, NotValidException {
-		RegistroPractica registro = new ModelMapper().map(dto, RegistroPractica.class);
+			@PathVariable String alumnoId) throws ConflictException, NotValidException, NotFoundException {
+		
+		Fecha fecha = practicasService.buscarByFecha(dto.getFecha());
+		
+		RegistroPractica registro = new RegistroPractica();
+		registro.setIdFecha(fecha.getId());
+		registro.setHoras(dto.getHoras());
+		registro.setDescripcion(dto.getDescripcion());
 		registro.setIdAlumno(alumnoId);
+		
 		RegistroPractica resgitroCreado = practicasService.crearRegistro(registro);
+		
 		return new ModelMapper().map(resgitroCreado, RegistroPracticaResponse.class);
 	}
 
