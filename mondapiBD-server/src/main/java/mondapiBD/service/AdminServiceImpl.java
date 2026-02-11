@@ -2,6 +2,7 @@ package mondapiBD.service;
 
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -41,16 +42,17 @@ public class AdminServiceImpl implements AdminService {
 
 		// 2. Comprobar perfil y crear la entidad asociada correspondiente
 		if (usuario.getPerfil() == Perfil.ALUMNO) {
-			
+
 			Alumno nuevoAlumno = new Alumno();
 			nuevoAlumno.setNombreCompleto(nombreCompletoAsociado);
-			// El resto de campos (ciclo, empresa...) se editarán a posteriori por el administrador
+			// El resto de campos (ciclo, empresa...) se editarán a posteriori por el
+			// administrador
 			alumnoRepository.save(nuevoAlumno);
-			
+
 			usuario.setIdAsociado(nuevoAlumno.getId());
 
 		} else if (usuario.getPerfil() == Perfil.TUTOR) {
-			
+
 			TutorDocente nuevoTutor = new TutorDocente();
 			nuevoTutor.setNombreCompleto(nombreCompletoAsociado);
 			nuevoTutor.setActivo(true);
@@ -58,6 +60,10 @@ public class AdminServiceImpl implements AdminService {
 
 			usuario.setIdAsociado(nuevoTutor.getId());
 		}
+
+		String passHash = DigestUtils.sha3_256Hex(usuario.getPassword());
+
+		usuario.setPassword(passHash);
 
 		// 3. El usuario se guarda como activo por defecto
 		usuario.setActivo(true);
