@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import mondapiBD.dto.request.RegistroPracticaRequest;
+import mondapiBD.dto.request.RegistrarPracticaRequest;
 import mondapiBD.dto.response.AlumnoResponse;
 import mondapiBD.dto.response.RegistroPracticaResponse;
 import mondapiBD.exception.ConflictException;
@@ -56,7 +56,7 @@ public class AlumnoController {
 
 	@Operation(summary = "Registrar tareas diarias", description = "Crea un registro de horas. Máximo 8h y saltos de 0.5h")
 	@PostMapping("/{id}/registro")
-	public RegistroPracticaResponse crearRegistro(@Valid @RequestBody RegistroPracticaRequest dto,
+	public RegistroPracticaResponse crearRegistro(@Valid @RequestBody RegistrarPracticaRequest dto,
 			@PathVariable String alumnoId) throws ConflictException, NotValidException {
 		RegistroPractica registro = new ModelMapper().map(dto, RegistroPractica.class);
 		registro.setIdAlumno(alumnoId);

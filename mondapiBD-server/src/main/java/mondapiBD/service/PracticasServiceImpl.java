@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import mondapiBD.exception.ConflictException;
+import mondapiBD.exception.NotFoundException;
 import mondapiBD.exception.NotValidException;
 import mondapiBD.model.Fecha;
 import mondapiBD.model.RegistroPractica;
@@ -92,5 +93,12 @@ public class PracticasServiceImpl implements PracticasService {
 	@Override
 	public void eliminarRegistro(String id) {
 		registroRepository.deleteById(id);
+	}
+
+	@Override
+	public Fecha buscarFecha(String id) throws NotFoundException {
+		
+		 return fechaRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado registros en esa fecha"));
+		// TODO Auto-generated method stub
 	}
 }

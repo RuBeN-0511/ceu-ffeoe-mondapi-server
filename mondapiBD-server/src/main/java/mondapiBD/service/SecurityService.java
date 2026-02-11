@@ -13,11 +13,11 @@ public interface SecurityService {
      * @throws InactiveUserException 
      * @throws IncorrectPasswordException 
      */
-    public Usuario login(String username, String passwordSha2) throws NotFoundException, InactiveUserException, IncorrectPasswordException;
+    public Usuario login(String username, String password) throws NotFoundException, InactiveUserException, IncorrectPasswordException;
 
     /**
      * Valida longitud mínima de 8 caracteres antes de actualizar.
      * @throws NotFoundException 
      */
-    public void actualizarPassword(String usuarioId, String nuevaPasswordSha2) throws NotFoundException;
+    public void actualizarPassword(String usuarioId, String nuevaPassword) throws NotFoundException;
 }
