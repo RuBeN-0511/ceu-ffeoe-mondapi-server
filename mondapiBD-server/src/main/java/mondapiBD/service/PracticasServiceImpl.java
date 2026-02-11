@@ -96,9 +96,9 @@ public class PracticasServiceImpl implements PracticasService {
 	}
 
 	@Override
-	public Fecha buscarFecha(String id) throws NotFoundException {
-		
-		 return fechaRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado registros en esa fecha"));
-		// TODO Auto-generated method stub
+	public Fecha buscarByFecha(LocalDate fecha) throws NotFoundException {
+
+		return fechaRepository.findByFecha(fecha)
+				.orElseThrow(() -> new NotFoundException("No se ha encontrado registros en esa fecha"));
 	}
 }

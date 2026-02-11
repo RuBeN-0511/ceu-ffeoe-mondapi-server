@@ -42,5 +42,6 @@ public interface PracticasService {
 
 	public List<RegistroPractica> listarRegistrosPorAlumno(String alumnoId);
 
-	public Fecha buscarFecha(String id) throws NotFoundException;
+
+	 public Fecha buscarByFecha(LocalDate fecha) throws NotFoundException;
 }
