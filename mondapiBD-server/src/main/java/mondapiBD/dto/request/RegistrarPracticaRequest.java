@@ -4,12 +4,14 @@ import java.time.LocalDate;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
 public class RegistrarPracticaRequest {
-    @NotBlank
+    
+	@NotNull
     private LocalDate fecha;
     
     @Positive(message = "Las horas deben ser mayores a 0")
